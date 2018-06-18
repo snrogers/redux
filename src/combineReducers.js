@@ -139,7 +139,11 @@ export default function combineReducers(reducers) {
   try {
     assertReducerShape(finalReducers)
   } catch (e) {
-    shapeAssertionError = e
+    if (e instanceof ShapeAssertionError) {
+      shapeAssertionError = e
+    } else {
+      throw e
+    }
   }
 
   return function combination(state = {}, action) {
